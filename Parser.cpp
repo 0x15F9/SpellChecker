@@ -14,6 +14,8 @@ Parser::Parser(string path, string sentence)
 {
     this->PopulateDictionary(path);
     this->Sentence = sentence;
+    this->splitSentence(sentence);
+    this->filterWords();
 }
 
 map<string, int> Parser::getDictionary()
@@ -30,6 +32,36 @@ void Parser::setSentence(string Sentence)
 {
     this->Sentence = Sentence;
 };
+
+void Parser::splitSentence(string sentence)
+{
+    
+    string::size_type prev_pos = 0, pos = 0;
+    while( (pos = sentence.find(' ', pos)) != string::npos )
+    {
+        string substring( sentence.substr(prev_pos, pos-prev_pos) );
+
+        Words.push_back(substring);
+
+        prev_pos = ++pos;
+    }
+
+    string substring( sentence.substr(prev_pos, pos-prev_pos) ); // Last word
+    Words.push_back(substring) ;
+}
+
+void Parser::filterWords()
+{
+    for(int i = 0; i < Words.size(); i++)
+    {
+        Words.at(i) = this->Filter(Words.at(i));
+    }
+}
+
+vector<string> Parser::getWords()
+{
+    return Words;
+}
 
 void Parser::printDictionary()
 {
@@ -91,5 +123,5 @@ void Parser::PopulateDictionary(string pathname)
             }
         }
     }
-
+    dataset.close();
 }

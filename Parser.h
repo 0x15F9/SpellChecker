@@ -24,6 +24,10 @@ public:
     string getSentence();
     void setSentence(string Sentence);
 
+    void splitSentence(string sentence);
+    vector<string> getWords();
+    void filterWords();
+
     string Filter(string word);
     void PopulateDictionary(string pathname);
 

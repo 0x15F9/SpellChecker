@@ -3,27 +3,34 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <vector>
 
 int main()
 {
     map<string, int> Dictionary;
+    vector<string> matches, words;
     string word;
+    string path="/home/isfaaq/Documents/School/BSc-CS/Spell Checker/Datasets/sherlock holmes.txt";
 
     cout << "word: ";
-    cin >> word;
+    getline(cin, word);
 
-    Parser parser;
+    Parser parser(path, word);
 
-    parser.PopulateDictionary("/home/isfaaq/Documents/School/BSc-CS/Spell Checker/Datasets/small.txt");
+    // parser.PopulateDictionary("/home/isfaaq/Documents/School/BSc-CS/Spell Checker/Datasets/small.txt");
     Dictionary = parser.getDictionary();
-    // parser.printDictionary();
+    Checker checker(Dictionary);
 
-    Checker checker(word, Dictionary);
+    words = parser.getWords();
+    for(int j = 0; j < words.size(); j++)
+    {
+        matches = checker.getMatches(words.at(j));
+        cout << endl << words.at(j) << ": " << endl;
+        for(int i = 0; i < matches.size(); i++)
+        {
+            cout << matches.at(i) << endl;
+        }
+    }
 
-    // for(int i=0; i<checker.getMatches().size(); i++)
-    // {
-        cout << checker.getMatches().at(0) << endl;
-    // }
-    
     return 0;
 }

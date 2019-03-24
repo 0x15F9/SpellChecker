@@ -4,14 +4,17 @@
 #include <map>
 #include "Checker.h"
 
-
 using namespace std;
 
 Checker :: Checker(){}
 
+Checker :: Checker(map<string, int> Dic){
+  	Dictionary = Dic; 
+}
+
 Checker :: Checker(string W , map<string, int> Dic){
 	Word = W;
-  Dictionary = Dic; 
+  	Dictionary = Dic; 
 }
 
 void Checker :: setWord(string W){
@@ -19,12 +22,12 @@ void Checker :: setWord(string W){
 }
 
 void Checker :: setDictionary(map<string, int> Dic){
-        Dictionary = Dic;
+	Dictionary = Dic;
 }
 
-void Checker :: functionAlteration(){
+void Checker::functionAlteration(string word){
 
-	string a = this->Word; 
+	string a = word;
 	int w;
 	w = a.length();
 	string s[w];
@@ -44,7 +47,7 @@ void Checker :: functionAlteration(){
 			{
 				ConcatWord += s[o];
 			}
-			if(Dictionary.find(ConcatWord)>0)
+			if(Dictionary[ConcatWord]>0)
 			{
 				this->Matches.push_back(ConcatWord);
 			}
@@ -52,9 +55,9 @@ void Checker :: functionAlteration(){
 	}
 }
 
-void Checker :: functionDeletion(){
+void Checker::functionDeletion(string word){
 	
-	string a = this->Word; 
+	string a = word; 
 	int w = a.length();
 	string s[w];
 	for (int i=0; i<w; i++)
@@ -69,41 +72,42 @@ void Checker :: functionDeletion(){
 			s[i]=a[i];
 		}
 		s[i] = "";
+		string ConcatWord="";
 		for (int o=0; o<w; o++)
 		{
 			ConcatWord += s[o];
 		}
-		if(Dictionary.find(ConcatWord)>0)
+		if(Dictionary[ConcatWord]>0)
 		{
 			this->Matches.push_back(ConcatWord);
 		}
 	}
 }
 
-void Checker :: functionInsertion(){
+void Checker::functionInsertion(string word){
 	string letters = "abcdefghijklmnopqrstuvwxyz";
-	int word_size = Word.size();
+	int word_size = word.size();
 	int i = 0;
 	string w;
 
 	for(int j=0; j<=word_size; j++)
 	{
-			int length1 = j;
-			int length2 = word_size-j;
-			for(int x=0; x<letters.size(); x++)
+		int length1 = j;
+		int length2 = word_size-j;
+		for(int x=0; x<letters.size(); x++)
+		{
+			w = word.substr(0, length1)+letters[x]+word.substr(j, length2);
+			if(Dictionary[w]>0)
 			{
-					w = Word.substr(0, length1)+letters[x]+Word.substr(j, length2);
-					if(Dictionary.find(w)>0)
-					{
-						this->Matches.push_back(ConcatWord);
-					}
-					i++;
+				this->Matches.push_back(w);
 			}
+			i++;
+		}
 	}
 }
 
-void Checker :: functionTransposition(){
-	string a = this->Word; 
+void Checker :: functionTransposition(string word){
+	string a = word; 
 	int lw;
 	lw = a.length();
 	string s[lw];
@@ -117,11 +121,13 @@ void Checker :: functionTransposition(){
 		temp = s[j];
 		s[j] = s[j+1];
 		s[j+1] = temp;
-		for (int o=0; o<w; o++)
+
+		string ConcatWord="";
+		for (int o=0; o<lw; o++)
 		{
 			ConcatWord += s[o];
 		}
-		if(Dictionary.find(ConcatWord)>0)
+		if(Dictionary[ConcatWord]>0)
 		{
 			this->Matches.push_back(ConcatWord);
 		}
@@ -132,17 +138,42 @@ void Checker :: functionTransposition(){
 	}
 }
 
-vector<string> Checker :: getMatches(){
-	if(this->Dictionary.find(this->Word) > 0)
+
+void Checker::functionAlteration()
+{
+	this->functionAlteration(this->Word);
+};
+void Checker::functionDeletion()
+{
+	this->functionAlteration(this->Word);
+};
+void Checker::functionInsertion()
+{
+	this->functionAlteration(this->Word);
+};
+void Checker::functionTransposition()
+{
+	this->functionAlteration(this->Word);
+};
+
+vector<string> Checker :: getMatches()
+{
+	return this->getMatches(this->Word);
+}
+
+vector<string> Checker :: getMatches(string word){
+	Matches.clear();
+	// if(Dictionary[word] > 0)
+	// {
+	// 	Matches.push_back(word);
+	// 	return Matches;
+	// }
+	// else
 	{
-		Matches.push_back(this->Word)
-		return Matches;
-	}
-	{
-		this->functionAlteration();
-		this->functionDeletion();
-		this->functionInsertion();
-		this->functionTransposition();
+		this->functionAlteration(word);
+		this->functionDeletion(word);
+		this->functionInsertion(word);
+		this->functionTransposition(word);
 		return Matches;
 	}
 }
