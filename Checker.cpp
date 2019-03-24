@@ -145,15 +145,15 @@ void Checker::functionAlteration()
 };
 void Checker::functionDeletion()
 {
-	this->functionAlteration(this->Word);
+	this->functionDeletion(this->Word);
 };
 void Checker::functionInsertion()
 {
-	this->functionAlteration(this->Word);
+	this->functionInsertion(this->Word);
 };
 void Checker::functionTransposition()
 {
-	this->functionAlteration(this->Word);
+	this->functionTransposition(this->Word);
 };
 
 vector<string> Checker :: getMatches()
