@@ -26,30 +26,17 @@ void Checker :: setDictionary(map<string, int> Dic){
 }
 
 void Checker::functionAlteration(string word){
-
-	string a = word;
-	int w;
-	w = a.length();
-	string s[w];
-	for (int i=0; i<w; i++)
+	string letters = "abcdefghijklmnopqrstuvwxyz";
+	string temp;
+	for(int i=0; i<word.length(); i++)
 	{
-		s[i]=a[i];
-	}
-
-	for (int k = 0; k<w; k++)
-	{
-		for (int l =0; l<26; l++)
+		for(int j=0; j<26; j++)
 		{
-			char arr[]="abcdefghijklmnopqrstuvwxyz";
-			s[k] = arr[l];
-			string ConcatWord="";
-			for (int o=0; o<w; o++)
+			temp = word;
+			temp[i] = letters[j];
+			if(Dictionary[temp]>0)
 			{
-				ConcatWord += s[o];
-			}
-			if(Dictionary[ConcatWord]>0)
-			{
-				this->Matches.push_back(ConcatWord);
+				this->Matches.push_back(temp);
 			}
 		}
 	}
@@ -137,24 +124,6 @@ void Checker :: functionTransposition(string word){
 		}
 	}
 }
-
-
-void Checker::functionAlteration()
-{
-	this->functionAlteration(this->Word);
-};
-void Checker::functionDeletion()
-{
-	this->functionDeletion(this->Word);
-};
-void Checker::functionInsertion()
-{
-	this->functionInsertion(this->Word);
-};
-void Checker::functionTransposition()
-{
-	this->functionTransposition(this->Word);
-};
 
 vector<string> Checker :: getMatches()
 {
