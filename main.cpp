@@ -12,7 +12,7 @@ int main()
     string word;
     string path="/home/isfaaq/Documents/School/BSc-CS/Spell Checker/Datasets/sherlock holmes.txt";
 
-    cout << "word: ";
+    cout << "sentence: ";
     getline(cin, word);
 
     Parser parser(path, word);

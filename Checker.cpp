@@ -12,15 +12,6 @@ Checker :: Checker(map<string, int> Dic){
   	Dictionary = Dic; 
 }
 
-Checker :: Checker(string W , map<string, int> Dic){
-	Word = W;
-  	Dictionary = Dic; 
-}
-
-void Checker :: setWord(string W){
-	Word = W;
-}
-
 void Checker :: setDictionary(map<string, int> Dic){
 	Dictionary = Dic;
 }
@@ -132,12 +123,12 @@ vector<string> Checker :: getMatches()
 
 vector<string> Checker :: getMatches(string word){
 	Matches.clear();
-	// if(Dictionary[word] > 0)
-	// {
-	// 	Matches.push_back(word);
-	// 	return Matches;
-	// }
-	// else
+	if(Dictionary[word] > 0)
+	{
+		Matches.push_back(word);
+		return Matches;
+	}
+	else
 	{
 		this->functionAlteration(word);
 		this->functionDeletion(word);
