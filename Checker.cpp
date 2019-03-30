@@ -116,11 +116,6 @@ void Checker :: functionTransposition(string word){
 	}
 }
 
-vector<string> Checker :: getMatches()
-{
-	return this->getMatches(this->Word);
-}
-
 vector<string> Checker :: getMatches(string word){
 	Matches.clear();
 	if(Dictionary[word] > 0)
