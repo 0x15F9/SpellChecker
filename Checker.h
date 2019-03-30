@@ -24,6 +24,7 @@ class Checker{
 		
 		vector<string> getMatches();
 		vector<string> getMatches(string word);
+		string wordWithHighestOccurence();
 		~Checker();
 };
 

@@ -10,12 +10,15 @@ using namespace std;
 Parser::Parser()
 {}
 
+Parser::Parser(string path)
+{
+    this->PopulateDictionary(path);
+}
+
 Parser::Parser(string path, string sentence)
 {
     this->PopulateDictionary(path);
-    this->Sentence = sentence;
-    this->splitSentence(sentence);
-    this->filterWords();
+    this->setSentence(sentence);
 }
 
 map<string, int> Parser::getDictionary()
@@ -31,11 +34,14 @@ string Parser::getSentence()
 void Parser::setSentence(string Sentence)
 {
     this->Sentence = Sentence;
+    Words.clear();
+    this->splitSentence(Sentence);
+    this->filterWords();
 };
 
 void Parser::splitSentence(string sentence)
 {
-    
+    Words.clear();
     string::size_type prev_pos = 0, pos = 0;
     while( (pos = sentence.find(' ', pos)) != string::npos )
     {
@@ -64,9 +70,17 @@ vector<string> Parser::getWords()
 }
 
 void Parser::printDictionary()
-{
-    for(map<string, int>::iterator it=Dictionary.begin(); it!=Dictionary.end(); ++it)
-        cout << it->first << " => " << it->second << '\n';
+{  
+    int count = 0;
+    for(map<string, int>::iterator it=Dictionary.begin(); it!=Dictionary.end(); ++it, count++)
+    {
+        cout << it->first << " [" << it->second << "]"<< "\t";
+        if(count==5)
+        {
+            cout << endl;
+            count = 0;
+        }
+    }
 }
 
 string Parser::Filter(string word)

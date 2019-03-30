@@ -12,10 +12,12 @@ class Parser
 protected:
     map<string, int> Dictionary;
     string Sentence;
+    string finalSentence;
     vector<string> Words;
 
 public: 
     Parser();
+    Parser(string pathname);
     Parser(string pathname, string sentence);
 
     map<string, int> getDictionary();
@@ -28,7 +30,7 @@ public:
     vector<string> getWords();
     void filterWords();
 
-    string Filter(string word);
+    static string Filter(string word);
     void PopulateDictionary(string pathname);
 
 };
