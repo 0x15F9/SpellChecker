@@ -185,7 +185,6 @@ void IO::CalcOccurences()
 		cout << '\t' << "|------            ERROR: NOT FOUND            ------|" << endl;
 		cout << '\t' << "+====================================================+" << endl;
 		cout << endl;
-		cout << endl;
 	}
 }
 
