@@ -120,9 +120,16 @@ void IO::match()
     cout << endl;
 
     cout << '\t' << "  > ";
-    for(vector<string>::iterator it = matches.begin(); it != matches.end(); it++)
+    if(matches.size() == 0 )
     {
-        cout << *it << " ";
+        cout << "We cannot find an alternative to this word." << endl;
+    } 
+    else
+    {
+        for(vector<string>::iterator it = matches.begin(); it != matches.end(); it++)
+        {
+            cout << *it << " ";
+        }
     }
     cout << endl;
 
@@ -199,6 +206,12 @@ void IO::addDictionary()
     cout << '\t' << "  > Path: ";
     getline(cin, path);
     parser.PopulateDictionary(path);
+    cout << endl;
+    
+    cout << '\t' << "+====================================================+" << endl;
+    cout << '\t' << "|------                  Added                 ------|" << endl;
+    cout << '\t' << "+====================================================+" << endl;
+
     cout << endl;
 }
 

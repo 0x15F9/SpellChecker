@@ -133,6 +133,7 @@ vector<string> Checker :: getMatches(string word){
 		Checker::functionDeletion(word);
 		Checker::functionInsertion(word);
 		Checker::functionTransposition(word);
+		if(Matches.size() == 0) Matches.push_back(" [INVALID WORD]");
 		Checker :: wordWithHighestOccurence();
 	}
 	return Matches;

@@ -15,8 +15,8 @@ class IO
 {
 protected:
 	map<string, string> alternative;
-    Parser parser;
-    Checker checker;
+  Parser parser;
+  Checker checker;
 
 public:
     IO();
