@@ -81,7 +81,7 @@ void IO::getValidSentence()
     for(int j = 0; j < words.size(); j++)
     {
         matches = checker.getMatches(words.at(j));
-        finalSentence += checker.wordWithHighestOccurence() + " ";
+        finalSentence += checker.getWordWithHighestOccurence() + " ";
     }
 
     cout << '\t' << "+====================================================+" << endl;
@@ -118,7 +118,7 @@ void IO::match()
     cout << '\t' << "  > ";
     for(vector<string>::iterator it = matches.begin(); it != matches.end(); it++)
     {
-        cout << *it << ", ";
+        cout << *it << " ";
     }
     cout << endl;
 

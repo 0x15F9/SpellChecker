@@ -131,8 +131,6 @@ vector<string> Checker :: getMatches(string word){
 		Checker::functionInsertion(word);
 		Checker::functionTransposition(word);
 		s = Checker :: wordWithHighestOccurence();
-		Matches.clear();
-	  Matches.push_back(s);
 		return Matches;
 	}
 }
@@ -167,9 +165,13 @@ string Checker :: wordWithHighestOccurence()
 			}
 		}
 	}
-	// Matches.clear();
-	// Matches.push_back(ApparentPerfectMatch);
+	wordWithHigestOcurrence = ApparentPerfectMatch;
 	return ApparentPerfectMatch;
+}
+
+string Checker::getWordWithHighestOccurence()
+{
+	return wordWithHigestOcurrence;
 }
 
 Checker :: ~Checker(){}
