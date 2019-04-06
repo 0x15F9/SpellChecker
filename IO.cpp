@@ -13,46 +13,45 @@ IO::IO()
     checker = Checker(parser.getDictionary());
 }
 
-int IO::displayMenu()
+string IO::displayMenu()
 {
-    int choice;
+    string choice;
 
     cout << '\t' << "+====================================================+" << endl;
     cout << '\t' << "|------              SpellChecker              ------|" << endl;
     cout << '\t' << "+====================================================+" << endl;
     cout << '\t' << "| > Choose from the following:                       |" << endl;
     cout << '\t' << "|                                                    |" << endl;
-    cout << '\t' << "|   1. Input Sentence                                |" << endl;
-    cout << '\t' << "|   2. Show alternatives for a word                  |" << endl;
-    cout << '\t' << "|   3. View dictionary                               |" << endl;
-    cout << '\t' << "|   4. View number of occurences of a word           |" << endl;
-    cout << '\t' << "|   5. Add another dictionary                        |" << endl;
-    cout << '\t' << "|   7. About                                         |" << endl;
-    cout << '\t' << "|   8. Exit                                          |" << endl;
+    cout << '\t' << "|   0. Input Sentence                                |" << endl;
+    cout << '\t' << "|   1. Show alternatives for a word                  |" << endl;
+    cout << '\t' << "|   2. View dictionary                               |" << endl;
+    cout << '\t' << "|   3. View number of occurences of a word           |" << endl;
+    cout << '\t' << "|   4. Add another dictionary                        |" << endl;
+    cout << '\t' << "|   5. About                                         |" << endl;
+    cout << '\t' << "|   9. Exit                                          |" << endl;
     cout << '\t' << "|                                                    |" << endl;
     cout << '\t' << "+====================================================+" << endl;
     cout << endl;
 
     cout << '\t' << "  > Choice: ";
-    cin >> choice;
-    cin.ignore();
+    getline(cin, choice);
     cout << endl;
     return choice;
 }
 
 void IO::loop()
 {
-    int choice;
+    string choice;
     while(true)     
     {
         choice = IO::displayMenu();
-        if(choice==1) this->getValidSentence();
-        else if(choice==2) this->match();
-        else if(choice==3) this->viewDictionary();
-				else if (choice==4) this->CalcOccurences();
-        else if (choice==5) this->addDictionary();
-        else if (choice==7) this->about();
-        else if (choice==8) break;
+        if(choice=="0") this->getValidSentence();
+        else if (choice=="1") this->match();
+        else if (choice=="2") this->viewDictionary();
+        else if (choice=="3") this->CalcOccurences();
+        else if (choice=="4") this->addDictionary();
+        else if (choice=="5") this->about();
+        else if (choice=="9") break;
         else this->invalidChoice();
     }
     
@@ -83,7 +82,12 @@ void IO::getValidSentence()
         matches = checker.getMatches(words.at(j));
         finalSentence += checker.getWordWithHighestOccurence() + " ";
     }
+    // Make first character uppercase
+    finalSentence[0] -= 32;
+    // Replace last space by a .
+    finalSentence[finalSentence.size()-1] = '.';
 
+    cout << endl;
     cout << '\t' << "+====================================================+" << endl;
     cout << '\t' << "|------           Alternate Sentence           ------|" << endl;
     cout << '\t' << "+====================================================+" << endl;
@@ -180,7 +184,6 @@ void IO::CalcOccurences()
 		cout << '\t' << "+====================================================+" << endl;
 		cout << '\t' << "|------            ERROR: NOT FOUND            ------|" << endl;
 		cout << '\t' << "+====================================================+" << endl;
-		cout << endl;
 		cout << endl;
 		cout << endl;
 	}

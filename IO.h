@@ -21,7 +21,7 @@ protected:
 public:
     IO();
 
-    int displayMenu();
+    string displayMenu();
     void loop();
 		void getValidSentence();
     void match();
