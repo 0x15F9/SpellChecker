@@ -208,8 +208,8 @@ void IO::about()
     cout << '\t' << "|                                                    |" << endl;
     cout << '\t' << "| > Authors                                          |" << endl;
     cout << '\t' << "|                                                    |" << endl;
-    cout << '\t' << "|   - Isfaaq Goomany                                 |" << endl;
     cout << '\t' << "|   - Yoveer Mungun                                  |" << endl;
+    cout << '\t' << "|   - Isfaaq Goomany                                 |" << endl;
     cout << '\t' << "|                                                    |" << endl;
     cout << '\t' << "| > Acknowledgement                                  |" << endl;
     cout << '\t' << "|                                                    |" << endl;
