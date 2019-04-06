@@ -4,57 +4,38 @@
 #include <map>
 #include "Checker.h"
 
-
 using namespace std;
 
 Checker :: Checker(){}
 
-Checker :: Checker(string W , map<string, int> Dic){
-	Word = W;
-  Dictionary = Dic; 
-}
-
-void Checker :: setWord(string W){
-	Word = W;
+Checker :: Checker(map<string, int> Dic){
+  	Dictionary = Dic; 
 }
 
 void Checker :: setDictionary(map<string, int> Dic){
-        Dictionary = Dic;
+	Dictionary = Dic;
 }
 
-void Checker :: functionAlteration(){
-
-	string a = this->Word; 
-	int w;
-	w = a.length();
-	string s[w];
-	for (int i=0; i<w; i++)
+void Checker::functionAlteration(string word){
+	string letters = "abcdefghijklmnopqrstuvwxyz";
+	string temp;
+	for(int i=0; i<word.length(); i++)
 	{
-		s[i]=a[i];
-	}
-
-	for (int k = 0; k<w; k++)
-	{
-		for (int l =0; l<26; l++)
+		for(int j=0; j<26; j++)
 		{
-			char arr[]="abcdefghijklmnopqrstuvwxyz";
-			s[k] = arr[l];
-			string ConcatWord="";
-			for (int o=0; o<w; o++)
+			temp = word;
+			temp[i] = letters[j];
+			if(Dictionary[temp]>0)
 			{
-				ConcatWord += s[o];
-			}
-			if(Dictionary.find(ConcatWord)>0)
-			{
-				this->Matches.push_back(ConcatWord);
+				this->Matches.push_back(temp);
 			}
 		}
 	}
 }
 
-void Checker :: functionDeletion(){
+void Checker::functionDeletion(string word){
 	
-	string a = this->Word; 
+	string a = word; 
 	int w = a.length();
 	string s[w];
 	for (int i=0; i<w; i++)
@@ -69,41 +50,42 @@ void Checker :: functionDeletion(){
 			s[i]=a[i];
 		}
 		s[i] = "";
+		string ConcatWord="";
 		for (int o=0; o<w; o++)
 		{
 			ConcatWord += s[o];
 		}
-		if(Dictionary.find(ConcatWord)>0)
+		if(Dictionary[ConcatWord]>0)
 		{
 			this->Matches.push_back(ConcatWord);
 		}
 	}
 }
 
-void Checker :: functionInsertion(){
+void Checker::functionInsertion(string word){
 	string letters = "abcdefghijklmnopqrstuvwxyz";
-	int word_size = Word.size();
+	int word_size = word.size();
 	int i = 0;
 	string w;
 
 	for(int j=0; j<=word_size; j++)
 	{
-			int length1 = j;
-			int length2 = word_size-j;
-			for(int x=0; x<letters.size(); x++)
+		int length1 = j;
+		int length2 = word_size-j;
+		for(int x=0; x<letters.size(); x++)
+		{
+			w = word.substr(0, length1)+letters[x]+word.substr(j, length2);
+			if(Dictionary[w]>0)
 			{
-					w = Word.substr(0, length1)+letters[x]+Word.substr(j, length2);
-					if(Dictionary.find(w)>0)
-					{
-						this->Matches.push_back(ConcatWord);
-					}
-					i++;
+				this->Matches.push_back(w);
 			}
+			i++;
+		}
 	}
 }
 
-void Checker :: functionTransposition(){
-	string a = this->Word; 
+void Checker :: functionTransposition(string word){
+	string a = word; 
 	int lw;
 	lw = a.length();
 	string s[lw];
@@ -117,11 +99,13 @@ void Checker :: functionTransposition(){
 		temp = s[j];
 		s[j] = s[j+1];
 		s[j+1] = temp;
-		for (int o=0; o<w; o++)
+
+		string ConcatWord="";
+		for (int o=0; o<lw; o++)
 		{
 			ConcatWord += s[o];
 		}
-		if(Dictionary.find(ConcatWord)>0)
+		if(Dictionary[ConcatWord]>0)
 		{
 			this->Matches.push_back(ConcatWord);
 		}
@@ -132,19 +116,60 @@ void Checker :: functionTransposition(){
 	}
 }
 
-vector<string> Checker :: getMatches(){
-	if(this->Dictionary.find(this->Word) > 0)
+vector<string> Checker :: getMatches(string word){
+	Matches.clear();
+	if(Dictionary[word] > 0)
 	{
-		Matches.push_back(this->Word)
+		Matches.push_back(word);
 		return Matches;
 	}
+	else
 	{
-		this->functionAlteration();
-		this->functionDeletion();
-		this->functionInsertion();
-		this->functionTransposition();
+		string s;
+		Checker::functionAlteration(word);
+		Checker::functionDeletion(word);
+		Checker::functionInsertion(word);
+		Checker::functionTransposition(word);
+		s = Checker :: wordWithHighestOccurence();
+		Matches.clear();
+	  Matches.push_back(s);
 		return Matches;
 	}
+}
+
+string Checker :: wordWithHighestOccurence()
+{
+	int PrevCount = 0;
+	string ApparentPerfectMatch;
+	ApparentPerfectMatch = this->Matches.at(0);
+	map<string, int>::iterator it;
+	for (it = Dictionary.begin(); it != Dictionary.end(); it++)
+		{
+			if (ApparentPerfectMatch == it->first)
+			{
+				PrevCount = it ->second;
+			}
+		}
+	for (int i = 0; i<Matches.size() ;i++)
+	{
+		for (it = Dictionary.begin(); it != Dictionary.end(); it++)
+		{
+			if (sizeof(this->Matches.at(i)) == sizeof(it->first))
+			{
+				if(it->first == (this->Matches.at(i)) )
+				{
+					if (it->second > PrevCount)
+					{
+						ApparentPerfectMatch = this->Matches.at(i);
+						PrevCount = it ->second;
+					}
+					}
+			}
+		}
+	}
+	// Matches.clear();
+	// Matches.push_back(ApparentPerfectMatch);
+	return ApparentPerfectMatch;
 }
 
 Checker :: ~Checker(){}
