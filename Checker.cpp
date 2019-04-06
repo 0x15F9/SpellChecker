@@ -121,18 +121,21 @@ vector<string> Checker :: getMatches(string word){
 	if(Dictionary[word] > 0)
 	{
 		Matches.push_back(word);
-		return Matches;
-	}
-	else
-	{
-		string s;
+		Checker :: wordWithHighestOccurence();
 		Checker::functionAlteration(word);
 		Checker::functionDeletion(word);
 		Checker::functionInsertion(word);
 		Checker::functionTransposition(word);
-		s = Checker :: wordWithHighestOccurence();
-		return Matches;
 	}
+	else
+	{
+		Checker::functionAlteration(word);
+		Checker::functionDeletion(word);
+		Checker::functionInsertion(word);
+		Checker::functionTransposition(word);
+		Checker :: wordWithHighestOccurence();
+	}
+	return Matches;
 }
 
 string Checker :: wordWithHighestOccurence()
