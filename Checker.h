@@ -11,6 +11,7 @@ class Checker{
 	protected:
 		map<string, int> Dictionary;
 		vector<string> Matches;
+		string wordWithHigestOcurrence;
 
   public:
 		Checker();
@@ -24,7 +25,10 @@ class Checker{
 		
 		vector<string> getMatches();
 		vector<string> getMatches(string word);
+
 		string wordWithHighestOccurence();
+		string getWordWithHighestOccurence();
+
 		~Checker();
 };
 

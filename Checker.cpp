@@ -121,7 +121,11 @@ vector<string> Checker :: getMatches(string word){
 	if(Dictionary[word] > 0)
 	{
 		Matches.push_back(word);
-		return Matches;
+		Checker :: wordWithHighestOccurence();
+		Checker::functionAlteration(word);
+		Checker::functionDeletion(word);
+		Checker::functionInsertion(word);
+		Checker::functionTransposition(word);
 	}
 	else
 	{
@@ -129,8 +133,9 @@ vector<string> Checker :: getMatches(string word){
 		Checker::functionDeletion(word);
 		Checker::functionInsertion(word);
 		Checker::functionTransposition(word);
-		return Matches;
+		Checker :: wordWithHighestOccurence();
 	}
+	return Matches;
 }
 
 string Checker :: wordWithHighestOccurence()
@@ -138,27 +143,38 @@ string Checker :: wordWithHighestOccurence()
 	int PrevCount = 0;
 	string ApparentPerfectMatch;
 	ApparentPerfectMatch = this->Matches.at(0);
-	for (int i = 0; i<Matches.size() ;i++)
-	{
-		int count = 0;
-		string wordextract;
-		map<string, int>::iterator it;
-    for (it = Dictionary.begin(); it != Dictionary.end(); it++)
+	map<string, int>::iterator it;
+	for (it = Dictionary.begin(); it != Dictionary.end(); it++)
 		{
-			if (sizeof(wordextract) == sizeof(it->first))
+			if (ApparentPerfectMatch == it->first)
 			{
-				 if(it->first == wordextract)
-				{
-					count+=1;
-				}
+				PrevCount = it ->second;
 			}
 		}
-		if (count > PrevCount)
+	for (int i = 0; i<Matches.size() ;i++)
+	{
+		for (it = Dictionary.begin(); it != Dictionary.end(); it++)
 		{
-			ApparentPerfectMatch = this->Matches.at(i);
+			if (sizeof(this->Matches.at(i)) == sizeof(it->first))
+			{
+				if(it->first == (this->Matches.at(i)) )
+				{
+					if (it->second > PrevCount)
+					{
+						ApparentPerfectMatch = this->Matches.at(i);
+						PrevCount = it ->second;
+					}
+					}
+			}
 		}
 	}
+	wordWithHigestOcurrence = ApparentPerfectMatch;
 	return ApparentPerfectMatch;
+}
+
+string Checker::getWordWithHighestOccurence()
+{
+	return wordWithHigestOcurrence;
 }
 
 Checker :: ~Checker(){}
